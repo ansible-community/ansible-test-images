@@ -7,13 +7,13 @@ on:
       - main
     paths:
       - .github/workflows/ansible-test.yml
-      - ansible-test/**
+      - [a-z]/**
   pull_request:
     branches:
       - main
     paths:
       - .github/workflows/ansible-test.yml
-      - ansible-test/**
+      - [a-z]/**
   workflow_dispatch:
   # Run daily (Monday at 08:00 UTC)
   schedule:
@@ -110,7 +110,7 @@ jobs:
         run: |
           "${NAME}/build.sh"
           podman tag "localhost/test-image:${NAME}" "${CONTAINER_REGISTRY}/${CONTAINER_IMAGE_NAME}:${NAME}"
-        working-directory: ./ansible-test/
+        working-directory: .
 
       # This is necessary to allow running systemd in rootless containers
       - name: Start systemd user service
