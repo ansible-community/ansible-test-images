@@ -32,7 +32,7 @@ jobs:
   build:
     name: 'Build ansible-test images (${{ matrix.name }} with Python ${{ matrix.python }})'
     runs-on: ubuntu-latest
-    environment: publish
+    environment: ${{ github.event_name != 'pull_request' && 'publish' || '' }}
     strategy:
       fail-fast: false
       matrix:
