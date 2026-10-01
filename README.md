@@ -55,12 +55,12 @@ ansible-test integration --python 3.14 --docker localhost/test-image:archlinux i
 
 ## Available images
 
-| image                 | py27 | py36 | py38 | py39 | py3.10 | py3.11 | py3.12 | py3.13 | py3.14 | Notes                                       |
-|-----------------------|------|------|------|------|--------|--------|--------|--------|--------|---------------------------------------------|
-| [archlinux]           |      |      |      |      |        |        |        |        |   ✔️    |                                             |
-| [debian-bookworm]     |      |      |      |      |        |   ✔️    |        |        |        | Based on debian-bullseye ansible-test image |
-| [debian-13-trixie]    |      |      |      |      |        |        |        |   ✔️    |        | Based on debian-bookworm ansible-test image |
-| [opensuse-tumbleweed] |      |      |      |      |        |        |        |   ✔️    |        | Based on [opensuse ansible-test image]      |
+| image                 | py3.11 | py3.12 | py3.13 | py3.14 | py3.15 | Notes                                       |
+|-----------------------|--------|--------|--------|--------|--------|---------------------------------------------|
+| [archlinux]           |        |        |        |   ✔️    |        |                                             |
+| [debian-bookworm]     |   ✔️    |        |        |        |        | Based on debian-bullseye ansible-test image |
+| [debian-13-trixie]    |        |        |   ✔️    |        |        | Based on debian-bookworm ansible-test image |
+| [opensuse-tumbleweed] |        |        |   ✔️    |        |        | Based on [opensuse ansible-test image]      |
 
 
 Note that these images from only work with ansible-test from ansible-core 2.14.0 or later.
