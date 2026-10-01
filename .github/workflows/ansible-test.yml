@@ -30,7 +30,8 @@ permissions:
 jobs:
   build:
     name: 'Build ansible-test images (${{ matrix.name }} with Python ${{ matrix.python }})'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
+    environment: publish
     strategy:
       fail-fast: false
       matrix:
@@ -154,11 +155,11 @@ jobs:
           done
         working-directory: ./.github/ansible-test-tests/ansible_collections/testns/testcol
 
-#      - name: Publish container image as ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ matrix.name }}
-#        if: github.event_name != 'pull_request'
-#        env:
-#          NAME: ${{ matrix.name }}
-#          USERNAME: ${{ secrets.quay_write_user }}
-#          PASSWORD: ${{ secrets.quay_write_pass }}
-#        run: >-
-#          podman push "${CONTAINER_REGISTRY}/${CONTAINER_IMAGE_NAME}:${NAME}" --tls-verify=true --creds="${USERNAME}:${PASSWORD}"
+      - name: Publish container image as ${{ env.CONTAINER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ matrix.name }}
+        if: github.event_name != 'pull_request'
+        env:
+          NAME: ${{ matrix.name }}
+          USERNAME: ${{ secrets.quay_write_user }}
+          PASSWORD: ${{ secrets.quay_write_pass }}
+        run: >-
+          podman push "${CONTAINER_REGISTRY}/${CONTAINER_IMAGE_NAME}:${NAME}" --tls-verify=true --creds="${USERNAME}:${PASSWORD}"
