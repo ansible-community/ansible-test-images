@@ -7,13 +7,14 @@ on:
       - main
     paths:
       - .github/workflows/ansible-test.yml
-      - [a-z]/**
+      - "[a-z]/**"
   pull_request:
     branches:
       - main
     paths:
       - .github/workflows/ansible-test.yml
-      - [a-z]/**
+      - "[a-z]/**"
+      - ".github/ansible-test-tests/**"
   workflow_dispatch:
   # Run daily (Monday at 08:00 UTC)
   schedule:
