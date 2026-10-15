@@ -60,6 +60,7 @@ ansible-test integration --python 3.14 --docker localhost/test-image:archlinux i
 | [archlinux]           |        |        |        |   ✔️    |        |                                             |
 | [debian-bookworm]     |   ✔️    |        |        |        |        | Based on debian-bullseye ansible-test image |
 | [debian-13-trixie]    |        |        |   ✔️    |        |        | Based on debian-bookworm ansible-test image |
+| [opensuse-leap-16.0]  |        |        |   ✔️    |        |        | Based on opensuse-tumbleweed image          |
 | [opensuse-tumbleweed] |        |        |   ✔️    |        |        | Based on [opensuse ansible-test image]      |
 
 
@@ -68,6 +69,7 @@ Note that these images from only work with ansible-test from ansible-core 2.14.0
 [archlinux]: https://quay.io/ansible-community/test-image:archlinux
 [debian-bookworm]: https://quay.io/ansible-community/test-image:debian-bookworm
 [debian-13-trixie]: https://quay.io/ansible-community/test-image:debian-13-trixie
+[opensuse-leap-16.0]: https://quay.io/ansible-community/test-image:opensuse-leap-16.0
 [opensuse-tumbleweed]: https://quay.io/ansible-community/test-image:opensuse-tumbleweed
 
 [ubuntu2004 ansible-test image]: https://github.com/ansible/distro-test-containers/blob/c4fe28818f5a33b675652637e3057bafe50039ee/ubuntu2004-test-container/Dockerfile
