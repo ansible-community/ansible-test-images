@@ -79,31 +79,6 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Downgrade Docker
-        # For some reason GitHub decided to bump Docker on the ubuntu-24.04 image,
-        # which is not compatible with podman and various other things.
-        run: |
-          # See https://docs.docker.com/engine/install/ubuntu/.
-
-          # Add Docker's official GPG key:
-          sudo apt update
-          sudo apt install ca-certificates curl
-          sudo install -m 0755 -d /etc/apt/keyrings
-          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-          sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-          # Add the repository to Apt sources:
-          sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
-          Types: deb
-          URIs: https://download.docker.com/linux/ubuntu
-          Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
-          Components: stable
-          Signed-By: /etc/apt/keyrings/docker.asc
-          EOF
-
-          sudo apt update
-          sudo apt-get install -y --allow-downgrades docker-ce-cli=5:28.0.4-1~ubuntu.24.04~noble docker-ce=5:28.0.4-1~ubuntu.24.04~noble
-
       - name: Install dependencies
         env:
           ANSIBLE_CORE_1: ${{ matrix.ansible-core-1 }}
@@ -118,6 +93,13 @@ jobs:
           "${NAME}/build.sh"
           podman tag "localhost/test-image:${NAME}" "${CONTAINER_REGISTRY}/${CONTAINER_IMAGE_NAME}:${NAME}"
         working-directory: .
+
+      - name: Copy image from podman to docker
+        if: ${{ matrix.test-with-docker }}
+        env:
+          NAME: ${{ matrix.name }}
+        run: |
+          podman push "localhost/test-image:${NAME}" "docker-daemon:localhost/test-image:${NAME}"
 
       # This is necessary to allow running systemd in rootless containers
       - name: Start systemd user service
@@ -136,13 +118,6 @@ jobs:
             ansible-test integration --color -v --python "${PYTHON}" --docker "localhost/test-image:${NAME}" shippable/posix/group1/
           done
         working-directory: ./.github/ansible-test-tests/ansible_collections/testns/testcol
-
-      - name: Copy image from podman to docker
-        if: ${{ matrix.test-with-docker }}
-        env:
-          NAME: ${{ matrix.name }}
-        run: |
-          podman push "localhost/test-image:${NAME}" "docker-daemon:localhost/test-image:${NAME}"
 
       - name: Install ansible-core ${{ matrix.ansible-core-2 }}
         if: ${{ matrix.test-with-docker }}
