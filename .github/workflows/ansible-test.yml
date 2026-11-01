@@ -45,8 +45,8 @@ jobs:
             test-with-docker: true
           - name: debian-bookworm
             python: '3.11'
-            ansible-core-1: ansible-core
-            ansible-core-2: devel
+            ansible-core-1: ansible-core<2.21  # TODO: revert to latest
+            ansible-core-2: stable-2.21  # TODO: revert to devel
             test-with-podman: false  # TODO: fix issues
             test-with-docker: true
           - name: debian-13-trixie
